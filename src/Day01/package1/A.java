@@ -1,4 +1,4 @@
-package day01.package1;
+package Day01.package1;
 
 public class A {
     protected String field1;

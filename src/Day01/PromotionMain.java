@@ -1,4 +1,4 @@
-package day01;
+package Day01;
 
 public class PromotionMain {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package day01;
+package Day01;
 
 class AA{}
 class BB extends AA{}

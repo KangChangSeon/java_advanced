@@ -1,6 +1,6 @@
-package day01.package2;
+package Day01.package2;
 
-import day01.package1.A;
+import Day01.package1.A;
 
 public class D extends A {
 //D클래스는 A클래스아 다른 패키지에 있지만 A의 자식이므로 A의 protected 필드, 생성자, 메소드는 접근이 가능
