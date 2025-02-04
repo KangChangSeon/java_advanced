@@ -23,11 +23,6 @@ public class CoffeShop {
 	}
 
 
-
-
-
-
-
 	//결과와 같이 총 판매금액을 구할 수 있도록 getTotalPrice메소드를 작성하세요.
 	public static int getTotalPrice(Beverage[] beverages) {
 		int totalPrice = 0;

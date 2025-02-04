@@ -3,6 +3,14 @@ package Day01.Quiz02;
 public class Tea extends Beverage {
     public static int amount;
 
+    public static int getAmount() {
+        return amount;
+    }
+
+    public static void setAmount(int amount) {
+        Tea.amount = amount;
+    }
+
     public Tea(String name) {
         super(name);
         amount++;
