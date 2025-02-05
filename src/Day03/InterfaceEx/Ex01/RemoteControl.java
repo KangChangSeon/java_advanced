@@ -14,5 +14,5 @@ public interface RemoteControl {
     // 바디 {} 가 없으면 자동으로 추상 메서드(abstract) 처리
 
     public void setVolume(int volume); // 볼륨 세팅
-    public void viewVolume();
+    public void viewVolume();          // 볼륨 설정값 확인
 }
