@@ -1,9 +1,5 @@
-package Day03.InterfaceEx.Ex02;
+package Day04.Ex01;
 // 필드 다형성
-
-import Day01.CarEx;
-import Day01.HankookTire;
-import Day01.Tire;
 
 public class CarMain {
     public static void main(String[] args) {

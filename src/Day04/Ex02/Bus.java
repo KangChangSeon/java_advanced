@@ -1,4 +1,4 @@
-package Day03.InterfaceEx.Ex03;
+package Day04.Ex02;
 
 public class Bus implements Vehicle {
 

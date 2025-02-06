@@ -1,4 +1,4 @@
-package Day03.InterfaceEx.Ex02;
+package Day04.Ex01;
 
 public interface Tire {
 
