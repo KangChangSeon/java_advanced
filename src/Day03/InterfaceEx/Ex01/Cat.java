@@ -1,4 +1,4 @@
-package Day03.InterfaceEx.Ex02;
+package Day03.InterfaceEx.Ex01;
 
 public class Cat extends Tail implements Animal,Pet {
 
