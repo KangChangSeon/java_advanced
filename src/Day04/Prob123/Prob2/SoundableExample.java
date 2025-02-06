@@ -1,4 +1,4 @@
-package Day04.Prob123;
+package Day04.Prob123.Prob2;
 
 public class SoundableExample {
     public static void printSound(Soundable soundable) {

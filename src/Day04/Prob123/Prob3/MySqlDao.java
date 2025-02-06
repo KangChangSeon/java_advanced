@@ -1,4 +1,4 @@
-package Day04.Prob123;
+package Day04.Prob123.Prob3;
 
 public class MySqlDao implements DataAccessObject {
 

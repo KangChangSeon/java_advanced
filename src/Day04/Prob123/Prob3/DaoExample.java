@@ -1,6 +1,6 @@
-package Day04.Prob123;
+package Day04.Prob123.Prob3;
 
-public class DooExample {
+public class DaoExample {
     public static void dbWork(DataAccessObject dao){
         dao.select();
         dao.insert();
