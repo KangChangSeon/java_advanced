@@ -1,4 +1,4 @@
-package Day03.InterfaceEx.Prob123;
+package Day04.Prob123;
 
 public class Cat implements Soundable {
     @Override
