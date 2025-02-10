@@ -1,4 +1,4 @@
-Object 클래스
+1. Object 클래스
 - boolean equals(Object obj)
   객체 동등 비교시 equals() 사용
   객체의 주소값을 비교하고 boolean(true, false) 값을 리턴
@@ -33,3 +33,8 @@ Object 클래스
    System 클래스   1970년 1월 1일 0시 부터 시작해서 현재까지 진행된 시간
                   currentTimeMills() 1/1000초 단위로 진행된 시간 반환
                   nanoTime() 1/1000000000초 단위로 진행된 시간 반환
+
+3. 날짜와 시간 클래스
+   자바는 컴퓨터의 날짜와 시간을 읽을 수 있도록 java.util 패키지에서 Date 클래스(날짜 정보),
+   Calendar(다양한 시간대별로 날짜와 시간) 클래스를 제공
+   조작을 위해서는 java.tim 패키지에서 LocalDataTime 클래스를 주로 사용함
