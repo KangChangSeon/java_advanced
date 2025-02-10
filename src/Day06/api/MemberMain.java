@@ -20,13 +20,13 @@ public class MemberMain {
         System.out.println(m2.hashCode());
 
         // 리스트를 생성하고 두 객체 데이터 추가
-        List<Member> members = new ArrayList<>();
+        List<Member> members = new ArrayList<>(); // 비교하지 않고 바로 집어넣음
 //        ArrayList<Member> members1 = new ArrayList<>();
         members.add(m1);
         members.add(m2);
         System.out.println("현재 m 클라우드 집은 "+members.size()+"명의 회원이 존재합니다.");
 
-        Set<Member> members1 = new HashSet<>();
+        Set<Member> members1 = new HashSet<>(); // 이름(name)이 같을 경우 한명으로 처리하게 됨
         members1.add(m1);
         members1.add(m2);
         System.out.println(members1.size());
