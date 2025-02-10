@@ -1,21 +1,19 @@
-package Day05.innerClass.ex03;
-
-import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
-
+package innerClass.ex03;
 class Creature {
-    int life;
+     int life;
 
-    Creature(Animal a) {
-        Animal a1 = a;
-    }
-    public void method1(){
-//        Animal animal = new Animal();
-    }
+     Creature(Animal animal){
+          Animal animal1 = animal;
+     }
+     public void method1(){
+         //Animal animal = new Animal();
+     }
 }
 
 class Animal{}
 
 public class CreatureMain {
-    Animal a = new Animal();
-    Creature c = new Creature(a);
+    Animal animal = new Animal();
+    Creature creature = new Creature(animal);
+
 }

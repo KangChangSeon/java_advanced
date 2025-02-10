@@ -1,14 +1,20 @@
-package Day05.innerClass.ex06.javabeans;
+package Day05.innerClass.ex06.builderpattern;
 
 public class HamburgerLotteria {
     public static void main(String[] args) {
-        Hamburger 선민 = new Hamburger();
-
-        Hamburger 유진 = new Hamburger();
-        Hamburger 성빈 = new Hamburger();
-
+        Hamburger 선민이햄버거 = new Hamburger.BurgerBuilder("플랫", "쇠고기").addCheese().addBacon().addtomato().addlettuce().build();
+        System.out.println(선민이햄버거);
     }
 }
+
+//실습 : 필수 사항에 셋트는 반드시 음료가 포함되는 햄버거 셋트이다.
+//음료가 포함되어 있는 햄버거를 만들어 주세요
+//치킨버거(토핑: 치즈, 야채 , 베이컨) + 콜라  셋트 메뉴 만들어 주세요
+
+
+
+
+
 
 // 기본 생성자 오버로딩에서 보였던 가독성 문제가 해결되고, 파라미터에 대해 해당되는 Setter 메서드를
 // 호출하면서 유연하게 객체 생성이 가능해짐.
