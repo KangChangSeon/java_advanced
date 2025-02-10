@@ -1,4 +1,4 @@
-package Day06.api;
+package Day06.api.objectEx;
 
 import java.util.Objects;
 
