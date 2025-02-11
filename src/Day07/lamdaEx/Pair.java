@@ -1,4 +1,4 @@
-package Day07.genericEx.lamdaEx;
+package Day07.lamdaEx;
 
 //Pair 클래스는  두 개의 타입매개변수 T, U를 가진 제너릭 클래스이다. 서로 다른 타입의 두 객체를 가질 수 있다.
 public class Pair<T,U> {

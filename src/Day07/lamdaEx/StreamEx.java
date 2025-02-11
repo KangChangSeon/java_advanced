@@ -1,4 +1,4 @@
-package Day07.genericEx.lamdaEx;
+package Day07.lamdaEx;
 
 import java.util.Arrays;
 import java.util.List;

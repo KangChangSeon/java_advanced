@@ -30,5 +30,82 @@
         - public interface Processor<T>{
                 void process(T input);
         }
+    - 제너릭 메서드 : 메서드 내에서 타입 매개변수를 사용할 수 있다.
+    - 구문
+        - public<T> void methodName(T param){ }
+        package Day07.genericEx.Ex03;
+
+        public class Sample {
+            // 제너릭 메서드
+            public static <T> void printValue(T value) {
+                System.out.println(value);
+            }
+
+            public static void main(String[] args) {
+                printValue("Hello World");
+                printValue(12345);
+            }
+        }
+
+    - 구속된 타입 매개변수
+        - 타입 매개변수의 인수로 사용할 수 있는 타입을 제한할 수 있다. extends 키워드를 통해서
+        - class ClassName <T extends ClassName>{ }
+        package Day07.genericEx.Ex03.extendsEx;
+
+        // Number 타입만 지원하는 제너릭 클래스
+        // Number 를 확장하는 클래스만 NumberBox 의 타입 매개변수로 사용할 수 있다.
+        public class NumberBox <T extends Number> {
+            private T number;
+
+            public void setNumber(T number) {
+                this.number = number;
+            }
+            public double doubleValue() {
+                return number.doubleValue();
+            }
+        }
 
 
+    - 제너릭타입을 사용할 때 유연할 수 있도록 지원하는 와일드카드 (?) 상한과 하한을 지정할 수 있다.
+        package Day07.genericEx.Ex03.extendsEx;
+
+        import java.util.List;
+
+        // Number 타입만 지원하는 제너릭 클래스
+        // Number 를 확장하는 클래스만 NumberBox 의 타입 매개변수로 사용할 수 있다.
+        public class NumberBox <T extends Number> {
+            private T number;
+
+            public void setNumber(T number) {
+                this.number = number;
+            }
+            public double doubleValue() {
+                return number.doubleValue();
+            }
+
+            **public void printNumberList(List<? extends Number> list){
+                for(Number number : list){
+                    System.out.println(number);
+                }**
+            }
+        }
+
+3. 람다를 사용한 함수형 인터페이스 프로그래밍에서 제너릭 사용
+    - 자바5 제너릭 등장 —> 자바 8 람다, 스트림 API 등장 ( 더 유연하고, 재사용이 가능한 코드)
+    - 람다와 함께 제너릭을 효과적으로 사용하는 패턴
+    - 람다 → 익명함수를 표현하는 방법으로 도입
+        - 표현식
+        (param) -> 표현식 (param) -> {실행문;}
+        List<String> names = Arrays.asList("John","Jane","Jack")
+        names.forEach(name -> System.out.println(name));
+
+
+    - 함수형 인터페이스 : 하나의 추상 메서드를 포함하는 인터페이스
+        - Runnable : 매개변수 없음, 반환 값 없음
+        - Callable<B> : 매개변수 없음, 타입 V의 값을 반환
+        - Consumer<T> : 타입 T의 매개변수를 받고 반환값 없다.
+        - Supplier<T> : 타입 T의 매개변수를 받고, 타입 T의 값을 반환
+        - Function<T,R> : 타입 T의 매개변수 받고, 타입 R의 값을 반환
+        - Predicate<T> : 타입 T의 매개변수 받고, boolean 값 반환
+
+4. 컬렉션 프레임워크
