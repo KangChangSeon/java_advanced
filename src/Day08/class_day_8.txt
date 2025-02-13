@@ -1,0 +1,286 @@
+## [Iterable](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html)
+
+- Collection 인터페이스의 최상위 인터페이스
+    - default void forEach(Consumer<? super T> action)
+        - 함수형 프로그래밍 전용 루프 메서드
+    - Iterator <T> iterator()
+        - 컬렉션에서 iterator를 구현한 메서드
+    - default Spliterator<T> spliterator()
+        - 파이프라이닝(연결) 관련 메서드
+- Map 인터페이스는 Stream을 사용하거나 간접적으로 키를 Collection으로 반환하여 루프문으로 순환하는 식을 사용한다.
+
+<aside>
+📌
+
+결론 : List, Set, Queue 에 상속을 하는 실제적인 최상위 컬렉션 타입
+
+           upcasting으로 다양한 종류의 컬렉션 자료형을 받아 데이터를 삽입, 삭제, 탐색 기능을
+
+           처리할 수 있다.
+
+</aside>
+
+## [List 컬렉션](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html)
+
+- 객체를 추가(add()), 검색(isEmpty()), 삭제(clear()) 하는 기능들이 있다
+
+## [ArrayList](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html)
+
+- 객체를 추가하면 내부 배열에 객체가 저장되고 제한 없이 객체를 추가할 수 있음
+- 동일한 객체를 중복 저장 시 동일한 번지가 저장 .null 저장 가능
+- 빈번한 객체 삭제와 삽입이 일어나는 곳에선 바람직하지 않음
+
+```java
+package Day08.collection.listEx;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+// ArrayList가 느린 이유는 0번 인덱스에 새로운 객체가 추가되면서
+// 객체의 인덱스를 한칸씩 뒤로 미루는 작업을 수행하기 떄문이다.
+public class LinkedListEx {
+    public static void main(String[] args) {
+        // ArrayList 컬렉션 객체 생성
+        List<String> list1 = new ArrayList<>();
+
+        // LinkedList 컬렉션 객체 생성
+        List<String> list2 = new LinkedList<>();
+
+        // 시작시간, 종료시간을 저장할 변수 선언
+        long startTime;
+        long endTime;
+
+        // ArrayList 컬렉션에 저장하는 시간 측정
+        startTime = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            list1.add(0,String.valueOf(i));
+        }
+        endTime = System.nanoTime();
+        System.out.printf("%-17s %8d ns \n","ArrayList 걸린 시간 ",(endTime - startTime));
+
+        // LinkedList 컬렉션에 저장하는 시간 측정
+        startTime = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            list2.add(0,String.valueOf(i));
+        }
+        endTime = System.nanoTime();
+        System.out.printf("%-17s %8d ns \n","LinkedList 걸린 시간 ",(endTime - startTime));
+    }
+}
+
+```
+
+## 2. [Comparable Interface](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html)
+
+- Comparable Interface 를 구현한 클래스는 compareTo() 메서드를 오버라이딩 해서 구현 클래스 객체들간의 정렬 기준을 정의하여 정렬하라
+(natural ordering) 정의한 클래스는 정렬 하수를 통해서 정렬할 수 있다.
+- 리스트 Collection.sort()
+- 배열     Arrays.sort()
+
+- 상품(smartphone) 클래스는 상품이름과 가격 필드를 가지고 있다.
+
+    ```java
+    package Day08.collection.listEx.sorting;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+
+    @Data
+    @AllArgsConstructor
+    public class Product **implements Comparable<Product>** {
+        private String p_name;
+        private int p_price;
+
+        @Override
+        public int compareTo(Product o) {
+            // return 값이 양수면 자리교환 O, 0이거나 음수면 자리교환 X
+            // 제품의 이름순으로 내림차순 < , 오름차순 >
+    //        return this.p_name.charAt(0) > o.p_name.charAt(0) ? 1: -1;
+            // 전체 문자열 비교 (전체 정렬)
+    //        return this.p_name.compareTo(o.p_name);
+
+            if(this.p_name.charAt(0) > o.p_name.charAt(0)){
+                return 1;
+            }else if(this.p_name.charAt(0) == o.p_name.charAt(0)){
+                if(this.p_price > o.p_price){
+                    return 1;
+                }else{
+                    return -1;
+                }
+            } else{
+                return -1;
+            }
+        }
+    ```
+
+    ```java
+    package Day08.collection.listEx.sorting;
+
+    import java.util.*;
+
+    public class ProductTest {
+        public static void main(String[] args) {
+            Product p1 = new Product("갤럭시S25",1200000);
+            Product p2 = new Product("아이폰15Pro",13700000);
+            Product p3 = new Product("LG폰",1000000);
+            Product p4 = new Product("갤럭시S25(중고)",700000);
+            Product p5 = new Product("아이폰15Pro(중고)",900000);
+            Product p6 = new Product("LG폰(중고)",10000);
+
+            // List 사용
+            List<Product> list = new ArrayList<>();
+            list.add(p1);
+            list.add(p2);
+            list.add(p3);
+            list.add(p4);
+            list.add(p5);
+            list.add(p6);
+            System.out.println("List 정렬 전");
+            list.forEach(s -> System.out.println(s));
+
+            Collections.sort(list);
+            System.out.println("List 정렬 후");
+            list.forEach(s -> System.out.println(s));
+
+            //배열[] 사용
+            Product[] products = {p1,p2,p3,p4,p5,p6};
+            System.out.println("배열 정렬 전");
+            Arrays.stream(products).forEach(System.out::println);
+
+            Arrays.sort(products);
+            System.out.println("배열 정렬 후");
+            Arrays.stream(products).forEach(System.out::println);
+        }
+    }
+    ```
+
+
+## 3. [Comparator Interface](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html) 객체를 정렬하는 데 사용되는 인터페이스
+
+- 익명 객체를 이용하여 다양한 속성을 받아 정렬할 수 있다는 장점이 있다.
+
+    ```java
+    package Day08.collection.listEx.sorting.comparator;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+
+    import java.util.ArrayList;
+    import java.util.Collections;
+    import java.util.Comparator;
+    import java.util.List;
+
+    //사용자(User) 이름과 나이로 5명(객체)를 생성하고 나이순으로 정렬 한 후  사용자의 이름과 나ㅏ이를 출력하시오
+    //ex) 홍길동 32세
+    //    임준오 48세
+    public class Main {
+        public static void main(String[] args) {
+
+            @Data
+            class User {
+                String name;
+                int age;
+
+                public User(String name, int age) {
+                    this.name = name;
+                    this.age = age;
+                }
+            }
+
+            // List로 5명의 사용자 저장 후 정렬
+            List<User> users = new ArrayList<User>();
+            users.add(new User("홍길동", 32));
+            users.add(new User("임준오", 48));
+            users.add(new User("강창선", 31));
+            users.add(new User("임성빈", 27));
+            users.add(new User("김형태", 31));
+
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+    //                return Integer.compare(o1.age, o2.age); // 나이순
+                    return o1.name.compareTo(o2.name); // 이름순
+                }
+            });
+
+            // 정렬 리스트 출력
+    //        Collections.sort(users,(u1,u2) -> Integer.compare(u1.age, u2.age)); // 나이순 정렬
+            Collections.sort(users, (u1,u2) -> u1.name.compareTo(u2.name)); // 이름순 정렬
+            users.forEach(s -> System.out.println(s));
+
+        }
+    }
+    ```
+
+    ```java
+    package Day08.collection.listEx.sorting.comparator;
+
+    import lombok.Data;
+    import lombok.ToString;
+
+    import java.util.ArrayList;
+    import java.util.Collections;
+    import java.util.Comparator;
+    import java.util.List;
+
+    //사용자(User) 이름과 나이로 5명(객체)를 생성하고 나이순으로 정렬 한 후  사용자의 이름과 나ㅏ이를 출력하시오
+    //ex) 홍길동 32세
+    //    임준오 48세
+    public class Main1 {
+        public static void main(String[] args) {
+
+            @ToString
+            class User {
+                private String name;
+                private int age;
+
+                public User(String name, int age) {
+                    this.name = name;
+                    this.age = age;
+                }
+
+                public String getName() {
+                    return name;
+                }
+
+                public int getAge() {
+                    return age;
+                }
+            }
+
+            // List로 5명의 사용자 저장 후 정렬
+            List<User> users = new ArrayList<User>();
+            users.add(new User("홍길동", 32));
+            users.add(new User("임준오", 48));
+            users.add(new User("강창선", 31));
+            users.add(new User("임성빈", 27));
+            users.add(new User("김형태", 31));
+
+            Collections.sort(users, Comparator.comparing(User::getAge)); // 나이순 정렬
+            users.forEach(s -> System.out.println(s));
+
+            System.out.println("====================================");
+
+            Collections.sort(users, Comparator.comparing(User::getName)); // 이름순 정렬
+            users.forEach(s -> System.out.println(s));
+
+            System.out.println("====================================");
+
+            // 나이순으로 정렬 한 뒤에 이름순으로 정렬
+            Collections.sort(users, Comparator.comparing(User::getAge).thenComparing(User::getName));
+            users.forEach(s -> System.out.println(s));
+        }
+    }
+    ```
+
+
+## 4. [Set 컬렉션](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html)
+
+- 순서가 없이 저장하고 동등 객체일 경우 저장하지 않음
+
+## 5. Map 컬렉션
+
+- 키(key) , 값(value) 으로 구성된 엔트리(Entry) 객체를 저장한다.
+    - 키와 값은 모두 객체이다.
+    - 키의 특징은 중복 저장할 수 없다. (Set)
+    - 값은 중복 저장 가능하다.
