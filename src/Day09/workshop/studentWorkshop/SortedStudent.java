@@ -1,4 +1,4 @@
-package workshop.studentWorkshop;
+package Day09.workshop.studentWorkshop;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

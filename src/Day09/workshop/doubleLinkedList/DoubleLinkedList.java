@@ -1,4 +1,4 @@
-package workshop.doubleLinkedList;
+package Day09.workshop.doubleLinkedList;
 
 //양방향 링크드 리스트
 //문제 아래 코드를 분석하여 데이터를 임의 노드 앞에 노드를 추가하는 메서드 추가하세요
@@ -143,7 +143,8 @@ public class DoubleLinkedList<T> {
         } else if (this.head.data == existData) {
             Node<T> newHead = new Node<T>(addData);
             newHead.next = this.head;
-            this.head.next.prev = this.head;
+            this.head.next.prev = newHead;
+            this.head = newHead;
             return true;
         } else {
             Node<T> node = this.head;
