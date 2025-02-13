@@ -101,67 +101,66 @@ public class DoubleLinkedList<T> {
         }
     }
 
-//    public void insertToFront(int frontNode, int insertNode) {
-//        // 초기 설정 head = Node 1
-//        Node<T> target = head;
-//        while (target != null) {
-//            if (target.data.equals(frontNode)) {
-//                break;
-//            }
-//            target = target.next;
-//        }
-//
-//        // 찾아봤는데 음슴
-//        if (target == null) {
-//            System.out.println(frontNode + " Node 가 없습니다.");
-//            return;
-//        }
-//
+    public void insertToFront(int frontNode, int insertNode) {
+        // 초기 설정 head = Node 1
+        Node<T> target = head;
+        while (target != null) {
+            if (target.data.equals(frontNode)) {
+                break;
+            }
+            target = target.next;
+        }
 
-    /// /        Node<T> newNode = new Node<>(insertNode); 안되넹 ;
-//        Node<T> newNode = new Node<>((T) (Integer) insertNode);
-//
-//        // MyLinkedList.insertToFront(3, 2); 기준 target이 3, newNode가 2
-//        newNode.next = target;
-//        newNode.prev = target.prev;
-//
-//        // 위치 설정 해주기
-//        if (target.prev != null) {
-//            target.prev.next = newNode;
-//        } else {
-//            head = newNode;
-//        }
-//        target.prev = newNode;
-//    }
+        // 찾아봤는데 음슴
+        if (target == null) {
+            System.out.println(frontNode + " Node 가 없습니다.");
+            return;
+        }
+
+        Node<T> newNode = new Node<>((T) (Integer) insertNode);
+
+        // MyLinkedList.insertToFront(3, 2); 기준 target이 3, newNode가 2
+        newNode.next = target;
+        newNode.prev = target.prev;
+
+        // 위치 설정 해주기
+        if (target.prev != null) {
+            target.prev.next = newNode;
+        } else {
+            head = newNode;
+        }
+        target.prev = newNode;
+    }
 
     //강사님 코드
-    public boolean insertToFront(T existData, T addData) {
-        if (this.head == null) {
-            this.head = new Node<T>(addData);
-            this.tail = this.head;
-            return true;
-        } else if (this.head.data == existData) {
-            Node<T> newHead = new Node<T>(addData);
-            newHead.next = this.head;
-            this.head.next.prev = newHead;
-            this.head = newHead;
-            return true;
-        } else {
-            Node<T> node = this.head;
-            while (node != null) {
-                if (node.data == existData) {
-                    Node<T> nodePrev = node.prev;
-                    nodePrev.next = new Node<T>(addData);
-                    nodePrev.next.next = node;
+//    public boolean insertToFront(T existData, T addData) {
+//        if (this.head == null) {
+//            this.head = new Node<T>(addData);
+//            this.tail = this.head;
+//            return true;
+//        } else if (this.head.data == existData) {
+//            Node<T> newHead = new Node<T>(addData);
+//            newHead.next = this.head;
+//            this.head.next.prev = newHead;
+//            this.head = newHead;
+//            return true;
+//        } else {
+//            Node<T> node = this.head;
+//            while (node != null) {
+//                if (node.data == existData) {
+//                    Node<T> nodePrev = node.prev;
+//                    nodePrev.next = new Node<T>(addData);
+//                    nodePrev.next.next = node;
+//
+//                    nodePrev.next.prev = nodePrev;
+//                    node.prev = nodePrev.next;
+//                    return true;
+//                } else {
+//                    node = node.next;
+//                }
+//            }
+//            return false;
+//        }
 
-                    nodePrev.next.prev = nodePrev;
-                    node.prev = nodePrev.next;
-                    return true;
-                } else {
-                    node = node.next;
-                }
-            }
-            return false;
-        }
-    }
 }
+
