@@ -1,4 +1,4 @@
-package Day10.lambda;
+package Day10.lambda.Ex01;
 
 public class Button {
 

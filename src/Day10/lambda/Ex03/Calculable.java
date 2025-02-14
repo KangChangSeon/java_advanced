@@ -1,7 +1,7 @@
-package Day10.lambda;
+package Day10.lambda.Ex03;
 
 @FunctionalInterface
 public interface Calculable {
     // 추상 메서드
-    void calculate(int x,int y);
+    double calculate(double x,double y);
 }
