@@ -36,7 +36,17 @@ public class BoardExample {
         System.out.println();
         switch (choice) {
             case 1:
-                System.out.println("***");
+                System.out.println("*** create() 메서드 실행됨");
+                break;
+            case 2:
+                System.out.println("*** read() 메서드 실행됨");
+                break;
+            case 3:
+                System.out.println("*** clear() 메서드 실행됨");
+                break;
+            case 4:
+                System.exit(0);
+
         }
     }
 
