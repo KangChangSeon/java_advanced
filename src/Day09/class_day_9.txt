@@ -1,0 +1,526 @@
+## 트리 (Tree)
+
+<aside>
+📌
+
+Node 와 Branch(가지) 를 이용해서, 사이클을 이루지 않도록 구성한 데이터 구조
+트리 중에서 이진트리(Binary Tree) 형태의 구조로, 탐색(검색) 알고리즘 구현을 위해 사용됨
+
+</aside>
+
+![image.png](attachment:5015a904-fa6c-40ec-8226-cbcd37fd697d:image.png)
+
+- 필수 용어
+    1. **노드( Node )**
+
+        트리에서 데이터를 저장하는 요소 + 데이터와 다른 연결된 노드에 대한 Branch 정보를 포함
+
+    2. **루트( Root Node )**
+    트리의 가장 최상위 노드 (맨 위에 있는 노드)
+    3. **레벨( Level )**
+    최상위 노드를 Level 0 으로 하였을 때, 하위 Branch로 연결된 노드의 깊이
+    4. **부모 노드( Parent Node )**
+    어떤 노드의 다음 레벨에 연결된 노드
+    5. **자식 노드( Child Node )**
+    어떤 노드에 상위 레벨과 연결된 노드
+    6. **리프 노드( Leaf Node = Terminal Node )**
+    Childe Node가 하나도 없는 노드
+    7. **형제 노드( Sibling = Brother Node )**
+    동일한 Parent Node를 가진 노드
+    8. **Depth( 깊이 )**
+    트리에서 Node가 가질 수 있는 최대 Level
+
+## 2. [이진 트리](https://www.mathwarehouse.com/programming/gifs/binary-search-tree.php#binary-)
+
+<aside>
+📌
+
+노드의 최대 Branch가 2인 트리 → 자식 노드가 최대 2개인 트리인듯
+
+</aside>
+
+- 이진 탐색 트리( Binary Search Tree = BST ) : 이진 트리에 추가적인 조건이 달린 트리
+왼쪽 노드는 해당 노드보다 작은 값, 오른쪽 노드는 해당 노드보다 큰 값을 갖도록  구성
+- 데이터 탐색(검색)
+
+    ```java
+    package Day09.collection.tree.binarySearchTree;
+
+    public class NodeMgmt {
+        Node head = null;
+
+        public class Node {
+            Node left;
+            Node right;
+            int value;
+
+            public Node(int data) {
+                this.value = data;
+                this.left = null;
+                this.right = null;
+            }
+        }
+
+        public boolean insertNode(int data) {
+            //CASE1 : Node가 하나도 없을때
+            if (this.head == null) {
+                this.head = new Node(data);
+            } else { //CASE2 : Node가 하나 이상 들어가 있을때
+                Node findNode = this.head;
+                while (true) {
+                    //CASE2-1 :  현재 Node의 왼쪽에 노드가 들어가야 할때
+                    if (data <= findNode.value) {
+                        if (findNode.left != null) {
+                            findNode = findNode.left;
+                        } else {
+                            findNode.left = new Node(data);
+                            break;
+                        }
+
+                        //CASE2-2 :  현재 Node의 오른쪽에 Node가 들어가야 할때
+                    } else {
+                        if (findNode.right != null) {
+                            findNode = findNode.right;
+                        } else {
+                            findNode.right = new Node(data);
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }
+            return true;
+        }
+
+        public Node searchNode(int data) {
+            // 1. Node가 하나도 없을 때
+            if (this.head == null) {
+                return null;
+                // 2. Node가 하나 이상일때
+            } else {
+                Node findNode = this.head;
+                while (findNode != null) {
+                    if (findNode.value == data) {
+                        return findNode;
+                    } else if (data < findNode.value) {
+                        findNode = findNode.left;
+                    } else {
+                        findNode = findNode.right;
+                    }
+                }
+            }
+            return null;
+        }
+
+        // 노드 삭제 boolean deleteNode(int data) : 팀 과제
+        public boolean deleteNode(int data) {
+            Node parent = null;
+            Node current = head;
+
+            while (current != null && current.value != data) {
+                parent = current;
+                if (data < current.value)
+                    current = current.left;
+                else
+                    current = current.right;
+            }
+
+            if (current == null) {
+                return false;
+            }
+
+            // 1: 자식이 X
+            if (current.left == null && current.right == null) {
+                if (parent == null) {
+                    head = null;
+                } else if (parent.left == current) {
+                    parent.left = null;
+                } else {
+                    parent.right = null;
+                }
+            }
+
+            // 2. 자식이 하나
+            else if (current.left == null || current.right == null) {
+                Node child = (current.left != null) ? current.left : current.right;
+                if (parent == null) {
+                    head = child;
+                } else if (parent.left == current) {
+                    parent.left = child;
+                } else {
+                    parent.right = child;
+                }
+            }
+
+            // 3. 자식이 둘
+            else {
+                Node parentMin = current;
+                Node minNode = current.right;
+
+                while (minNode.left != null) {
+                    parentMin = minNode;
+                    minNode = minNode.left;
+                }
+
+                current.value = minNode.value;
+
+                if (parentMin.left == minNode) {
+                    parentMin.left = minNode.right;
+                } else {
+                    parentMin.right = minNode.right;
+                }
+            }
+            return true;
+        }
+    }
+    ```
+
+
+## TreeMap & TreeSet
+
+```java
+package Day09.collection.tree.treemap;
+
+import java.util.*;
+
+public class TreeMapEx {
+    public static void main(String[] args) {
+        TreeMap<String, Integer> treeMap = new TreeMap<>();
+
+        // 엔트리 저장
+        treeMap.put("apple",1000);
+        treeMap.put("banana",500);
+        treeMap.put("grape",3000);
+        treeMap.put("applemango",5000);
+        treeMap.put("pear",2000);
+
+        // 정렬된 엔트리 하나씩 가져와 보자
+        Set<Map.Entry<String,Integer>> entrySet = treeMap.entrySet();
+        for (Map.Entry<String, Integer> entry : entrySet) {
+            System.out.println(entry.getKey()+":"+entry.getValue());
+        }
+        System.out.println();
+
+        // 특정 키에 대한 값을 가져오고 싶다.
+        Map.Entry<String, Integer> entry = null;
+        entry = treeMap.firstEntry();
+        System.out.println("제일 앞에 저장된 과일명 : " + entry.getKey());
+        System.out.println();
+
+        // 내림차순으로 정렬하기
+        NavigableMap<String, Integer> descendingMap = treeMap.descendingMap();
+        Set<Map.Entry<String, Integer>> descendingEntrySet = descendingMap.entrySet();
+        for (Map.Entry<String, Integer> e : descendingEntrySet) {
+            System.out.println(e.getKey()+":"+e.getValue());
+        }
+    }
+}
+
+```
+
+```java
+package Day09.collection.tree.treeset;
+
+import java.util.NavigableSet;
+import java.util.TreeSet;
+
+public class TreeSetEx {
+    public static void main(String[] args) {
+        // TreeSet 컬렉션 생성
+        TreeSet<Integer> scores = new TreeSet<>();
+
+        scores.add(87);
+        scores.add(98);
+        scores.add(75);
+        scores.add(95);
+        scores.add(89);
+
+        // 알아서 sorting 해서 나옴
+        for (Integer score : scores) {System.out.println(score+"점");}
+        System.out.println("--------------------------------------");
+
+        System.out.println("우리반 꼴등 : " + scores.first()+"점");
+        System.out.println("우리반 일등 : " + scores.last()+"점");
+        System.out.println("95점 기준 바로 아래 점수 : " + scores.lower(95));
+        System.out.println("95점 기준 바로 위 점수 : " + scores.higher(95));
+        System.out.println("매개변수 기준 없으면 아래 : " + scores.floor(85));
+        System.out.println("매개변수 기준 없으면 위 : " + scores.ceiling(85));
+
+        System.out.println("--------------------------------------");
+        // 내림차순 정렬하기
+        NavigableSet<Integer> descScores = scores.descendingSet();
+        for (Integer score : descScores) {
+            System.out.println(score+"점");
+        }
+
+        System.out.println("--------------------------------------");
+        // 점수 기준 범위 검색 (80 <= )
+        NavigableSet<Integer> rangeSet = scores.tailSet(80, true);
+        for (Integer score : rangeSet) {
+            System.out.println(score+"점");
+        }
+
+        // 범위 검색 ( 80 <= score < 90 )
+        rangeSet = scores.subSet(80,true,90,false);
+        for (Integer score : rangeSet) {
+            System.out.println(score+"점");
+        }
+    }
+}
+
+```
+
+## 3. 컬렉션 프레임워크
+
+- 컬렉션 프레임워크의 대부분의 클래스들은 싱글 스레드 환경에서 사용하도록 설계되어 있음
+    - Vector, Hashtable이 동기화된 (Synchronized) 메서드로 구성되어 있어 스레드 환경에서 데이터를 안전하게 처리할 수 있다. → Vector, Hashtable은 이제 안쓰는 추세
+
+- List<T> synchronizedList(List<T> list) : List를 동기화된 List로 리턴
+
+    ```java
+    List<T> list = new ArrayList<T>();
+    -> List<T> list = Collections.synchronizeList(new ArrayList<T>());
+    ```
+
+- Set<T> synchronizedSet(Set<T> set) : Set을 동기화된 Set으로 리턴
+- Map<T> synchronizedMap(Map<T> map) : Map을 동기화된 Map으로 리턴
+
+```java
+package Day09.collection.other;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public class SynchronizedMapEx {
+    public static void main(String[] args) {
+        // 2000개 완벽히 map에 객체 저장
+        Map<Integer, String> map = Collections.synchronizedMap(new HashMap<>());
+        // 스레드들의 경쟁으로 데이터의 접근이 안된 스레드는 객체를 쓰지 못함
+//        Map<Integer, String> map = new HashMap<>();
+
+        // 작업 스레드 객체A 생성
+        Thread threadA = new Thread(){
+            @Override
+            public void run() {
+                // 객체 1000개 추가
+                for (int i = 1; i <= 1000; i++) {
+                    map.put(i,"내용A" + i);
+                }
+            }
+        };
+
+        // 작업 스레드 객체A 생성
+        Thread threadB = new Thread(){
+            @Override
+            public void run() {
+                // 객체 1000개 추가
+                for (int i = 1001; i <= 2000; i++) {
+                    map.put(i,"내용B" + i);
+                }
+            }
+        };
+
+        // 작업 스레드 실행
+        threadA.start();
+        threadB.start();
+
+        // 작업 스레드들이 모두 종료될때까지 main 스레드를 기다리게 할것임
+        try{
+            threadA.join();
+            threadB.join();
+        } catch (InterruptedException e) {
+            System.out.println("외부 문제로 프로그램 종료");
+        } catch (Exception e1){
+            e1.printStackTrace();
+        }
+
+        // 저장된 총 객체 수 얻기
+        int size = map.size();
+        System.out.println("총 객체 수 : " + size);
+    }
+}
+```
+
+```java
+package Day09.collection.other;
+
+import java.util.*;
+
+public class UnmodifiableEx {
+    public static void main(String[] args) {
+        // 수정할 수 없는 컬렉션 만드는 방법
+        // 1. of()
+        List<String> immutableList = List.of("a", "b", "c");
+//        immutableList.add("d"); //추가 자체가 안됨
+
+        Set<String> immutableSet = Set.of("a", "b", "c");
+//        immutableSet.remove("c");
+
+        Map<Integer, String> immutableMap = Map.of(1, "a", 2, "b", 3, "c");
+//        immutableMap.put(4, "d");
+
+        // List 컬렉션을 불변 컬렉션으로 복사
+        List<String> list2 = new ArrayList<>();
+        list2.add("e");
+        list2.add("f");
+        list2.add("g");
+        List<String> immutableList2 = List.copyOf(list2);
+
+        // 배열로부터 List 불변 컬렉션으로 생성
+        String array[] = new String[5];
+        array[3] = "D";
+        array[4] = "E";
+        for (String s : array) {
+            System.out.print(s + " ");
+        }
+        List<String> immutString3 = Arrays.asList(array);
+    }
+}
+```
+
+# 람다 표현식 (Java 8 에서 도입)
+
+- 함수형 프로그래밍 구조에 큰 변화가 생김
+- 단일 메서드 인터페이스(함수형 인터페이스)의 인스턴스를 보다 명확하고 간결하게 표현할 수 있는 메서드를 제공하고 컬렉션 조작을 편리하게 하고, 전반적인 코드의 가독성과 유연성을 확장시키는 장점을 가지고 있다.
+
+## 1. 람다 표현식의 필요성
+
+- 함수형 인터페이스의 새로운 인스턴스를 생성하려면 일반적으로 익명 내부 클래스를 사용하여 생성하였으나 이로 인해 코드가 복잡하고 번거로울 때가 많았다.
+- 람다 표현식으로 코드의 명확성을 높이고 번잡함을 줄이는 시나리오로 채택되어 자바 8부터 지원
+
+    ```java
+    Runnable r = new Runnable(){
+                @Override
+                public void run() {
+                    System.out.println("Hello From a Thread");
+                }
+            };
+
+    Runnable runnable1 = () -> System.out.println("Hello From a Runnable");
+    ```
+
+
+- **문법)     (parameters) → expression (parameters) → { //statements }**
+**3가지 주요 컴포넌트**
+    1. 매개변수 : 괄호로 ( ) 로 감싸인 메서드의 입력 매개변수이다.
+    2. 화살표 토큰 (→) : 매개변수와 표현식 본체와 구분하는 구분자
+    3. 본문 : 메서드의 실제 구현부분. 단일 표현식 또는 블럭일 수도 있다.
+
+    ```java
+    Function<Integer, Integer> square = x -> x*x;
+    BiFunction<Integer, Interger, Integer> add = (a,b) -> {return a+b};
+    ```
+
+
+- 함수형 인터페이스
+    - 자바는 람다 표현식으로 구현할 수 있는 타입을 정의하기 위해 함수형 인터페이스 개념을 사용한다.
+    - java.util.function 패키지는 다양한 수와 타입의 인수를 받을 수 있는 함수형 인터페이스를 포함하고 있다.
+- 자바의 일반적인 함수형 인터페이스
+
+### 자바의 일반적인 함수형 인터페이스
+
+- 함수형 인터페이스 : 하나의 추상 메서드를 포함하는 인터페이스
+    - Runnable : 매개변수 없음, 반환 값 없음
+    - Callable<B> : 매개변수 없음, 타입 V의 값을 반환
+    - Consumer<T> : 타입 T의 매개변수를 받고 반환값 없다.
+    - Supplier<T> : 타입 T의 매개변수를 받고, 타입 T의 값을 반환
+    - Function<T,R> : 타입 T의 매개변수 받고, 타입 R의 값을 반환
+    - Predicate<T> : 타입 T의 매개변수 받고, boolean 값 반환
+1. Predicate<T> : 타입 T의 매개변수 받고 불리언 값 반환
+
+```java
+Predicate<String> isEmpty = str -> str.isEmpty();
+```
+
+1. Function<T, R> : 타입 T의 매개변수 받고, 타입 R의 값을 반환
+
+```java
+Function<String, Integer> length = str -> str.length();
+```
+
+1. Consumer<T> : 타입 T의 매개변수를 받고 반환값 없다.
+
+```java
+Consumer<String> print = str -> System.out.println(str);
+```
+
+1. Supplier<T> : 타입 T의 매개변수 받고, 타입 T의 값을 반환
+
+```java
+Supplier<String> greet = () -> "Hello JAVA";
+```
+
+1. BiFunction<T,U,R> : 매개변수를 2개를 받아 결과를 생성하는 함수
+
+```java
+BiFuntion<Integer, Integer, Integer> multiply = (x,y) -> x*y;
+```
+
+- 스트림 API + 람다
+
+    ```java
+    List<String> names = Arrays.asList(”Alics”,”Bob”,”John”,”David”);
+    List<String> filterNames = names.stram().filter(name -> name.startsWith("A")).collect(Collectors.toList());
+    ```
+
+- 고차 함수 지원
+
+    ```java
+    public static Function<Integer, Integer> createMultiplier(int factor){
+    			return x -> x * factor;
+    }
+
+    Function<Integer, Integer> doubleValue = createMultiplier(2);
+    System.out.println(doubleValue.apply(5));
+    ```
+
+
+```java
+package Day09.lambda;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
+public class TestMain1 {
+    public static void main(String[] args) {
+        Runnable r = new Runnable(){
+            @Override
+            public void run() {
+                System.out.println("Hello From a Thread");
+            }
+        };
+
+        Runnable runnable1 = () -> System.out.println("Hello From a Runnable");
+        runnable1.run();
+
+        Function<String, Integer> stringLength = String::length;
+        List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "John");
+        names.forEach(System.out::println);
+        stringLength.apply("Alice");
+
+        // 람다 표현식을 사용하여 "Hello Java"를 10번 출력하는 프로그램
+        Runnable task1 = () -> {
+            for (int i = 0; i < 10; i++) {
+                System.out.println("Hello Java");
+            }
+        };
+        Thread thread1 = new Thread(task1);
+
+        Runnable task2 = () -> {
+            for (int i = 0; i < 10; i++) {
+                System.out.println("Hello Java");
+            }
+        };
+        Thread thread2 = new Thread(task1);
+        thread2.start();
+        thread1.start();
+
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+        numbers.stream().filter(num -> num % 2 == 1).forEach(System.out::println);
+    }
+}
+```
