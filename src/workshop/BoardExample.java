@@ -24,30 +24,45 @@ public class BoardExample {
         this.writer = writer;
         this.title = title;
         this.date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        this.formattedDate = sdf.format(date); // 변환된 날짜 문자열 저장
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        this.formattedDate = sdf.format(date);
     }
 
     void mainMenu() {
-        int choice = 0;
-        System.out.println("메인 메뉴: 1.Create | 2.Read | 3.Clear | 4.Exit");
-        System.out.print("메뉴 선택: ");
-        choice = scanner.nextInt();
-        System.out.println();
-        switch (choice) {
-            case 1:
-                System.out.println("*** create() 메서드 실행됨");
-                break;
-            case 2:
-                System.out.println("*** read() 메서드 실행됨");
-                break;
-            case 3:
-                System.out.println("*** clear() 메서드 실행됨");
-                break;
-            case 4:
-                System.exit(0);
-
+        while (true) {
+            int choice = 0;
+            System.out.println("메인 메뉴: 1.Create | 2.Read | 3.Clear | 4.Exit");
+            System.out.print("메뉴 선택: ");
+            choice = scanner.nextInt();
+            System.out.println();
+            switch (choice) {
+                case 1:
+                    create();
+                    break;
+                case 2:
+                    read();
+                    break;
+                case 3:
+                    clear();
+                    break;
+                case 4:
+                    System.exit(0);
+                default:
+                    System.out.println("잘못 입력하셨습니다.");
+            }
         }
+    }
+    void create() {
+        System.out.println("*** create() 메서드 실행됨");
+        System.out.println();
+    }
+    void read(){
+        System.out.println("*** read() 메서드 실행됨");
+        System.out.println();
+    }
+    void clear(){
+        System.out.println("*** clear() 메서드 실행됨");
+        System.out.println();
     }
 
     void list() {
@@ -63,11 +78,15 @@ public class BoardExample {
         mainMenu();
     }
 
-    public static void main(String[] args) {
+    static void main(){
         BoardExample writer1 = new BoardExample(1, "winter", "게시판에 오신 것을 환영합니다.");
         BoardExample writer2 = new BoardExample(1, "winter", "올 겨울은 많이 춥습니다.");
         boardList.add(writer1);
         boardList.add(writer2);
         writer1.list();
+    }
+
+    public static void main(String[] args) {
+        BoardExample.main();
     }
 }
