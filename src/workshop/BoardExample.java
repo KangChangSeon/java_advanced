@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+//아아
 @Data
 public class BoardExample {
     private int no;
