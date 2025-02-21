@@ -57,12 +57,37 @@ public class Board {
 
     void createBoard() {
         System.out.println("[새 게시물 입력]");
-        System.out.print("제목: ");
-        String title = scanner.nextLine();
+        String title = null;
+        while(true){
+            try {
+                System.out.print("제목: ");
+                title = scanner.nextLine();
+                if (title.matches("[가-힣a-zA-Z0-9]{1,10}")){
+                    break;
+                }else{
+                    System.out.println("한영 숫자로 이내로 입력해주세요");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         System.out.print("내용: ");
         String content = scanner.nextLine();
-        System.out.print("작성자: ");
-        String writer = scanner.nextLine();
+        String writer = null;
+        while(true){
+            try {
+                System.out.print("작성자: ");
+                writer = scanner.nextLine();
+                if (writer.matches("[가-힣a-zA-Z]{1,5}")) {
+                    break;
+                }else{
+                    System.out.println("한영 5글자 이내로 입력해주세요");
+                }
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
+
 
         System.out.println("\n보조 메뉴: 1.OK | 2.Cancle");
         System.out.print("선택: ");
@@ -86,12 +111,12 @@ public class Board {
         } else {
             System.out.println("[게시물 목록]");
             System.out.println("-----------------------------------------------------------");
-            System.out.printf("%-7s %-10s %-10s %-30s\n", "no", "writer", "date", "title");
+            System.out.printf("%-7s %-15s %-15s %-30s\n", "no", "writer", "date", "title");
             System.out.println("-----------------------------------------------------------");
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
             for (Board board : boardList) {
-                System.out.printf("%-7d %-10s %-10s %-30s\n",
+                System.out.printf("%-7d %-10s %-18s %-30s\n",
                         board.getBno(),
                         board.getBwriter(),
                         sdf.format(board.getBdate()),
@@ -153,12 +178,36 @@ public class Board {
 
     void update(Board board) {
         System.out.println("[수정 내용 입력]");
-        System.out.print("제목: ");
-        String newTitle = scanner.nextLine();
+        String newTitle = null;
+        while(true){
+            try {
+                System.out.print("제목: ");
+                newTitle = scanner.nextLine();
+                if (newTitle.matches("[가-힣a-zA-Z0-9]{1,10}")){
+                    break;
+                }else{
+                    System.out.println("한영 숫자로 이내로 입력해주세요");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         System.out.print("내용: ");
         String newContent = scanner.nextLine();
-        System.out.print("작성자: ");
-        String newWriter = scanner.nextLine();
+        String newWriter = null;
+        while(true){
+            try {
+                System.out.print("작성자: ");
+                newWriter = scanner.nextLine();
+                if (newWriter.matches("[가-힣a-zA-Z]{1,5}")) {
+                    break;
+                }else{
+                    System.out.println("한영 5글자 이내로 입력해주세요");
+                }
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
         board.setBtitle(newTitle);
         board.setBcontent(newContent);
         board.setBwriter(newWriter);
@@ -184,3 +233,15 @@ public class Board {
         Board.main();
     }
 }
+/*
+예외처리 생각해야 할 것
+1. 정규 표현식으로 입력할때 제한할것인가?
+   writer : 5글자
+   title : 영어라면 길어야 되고 한글이면 굳이긴 한데 10글자로
+   ㄴ> create 와 update 내용에서 예외처리
+2. 게시물을 삭제해서 빈 bno에 새로운 게시글이 생길때 bno를 줄것인가?
+   1 2 3 번 게시글이 있는데 1번을 삭제하고 새로운 게시글을 작성할때
+   1번을 bno로 줄것인가 4번을 줄것인가가 문제인데, 4번을 주는걸로 결정
+   이유 : 지금은 게시글이 많지 않아서 문제가 아니지만, 게시글이 몇만개가 된다면?
+         모든 리스트의 bno를 검사해야되기 때문에 효율이 떨어지는 것 같음
+ */
