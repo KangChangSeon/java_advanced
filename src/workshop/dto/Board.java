@@ -1,4 +1,4 @@
-package workshop;
+package workshop.dto;
 
 import lombok.Data;
 import java.util.Date;

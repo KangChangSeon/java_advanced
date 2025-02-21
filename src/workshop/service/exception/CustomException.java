@@ -1,4 +1,4 @@
-package workshop;
+package workshop.service.exception;
 
 public class CustomException extends RuntimeException{
     private final ErrorException errorException;
@@ -8,7 +8,14 @@ public class CustomException extends RuntimeException{
         this.errorException = errorException;
     }
 
-    public ErrorException getError(){
+    public ErrorException getErrorException(){
         return errorException;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomException{" +
+                "errorException=" + errorException +
+                '}';
     }
 }

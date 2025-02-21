@@ -1,7 +1,9 @@
-package workshop;
+package workshop.controlller;
 
-import workshop.Board;
-import workshop.BoardService;
+import workshop.dto.Board;
+import workshop.service.BoardService;
+import workshop.service.exception.CustomException;
+import workshop.service.exception.ErrorException;
 
 import java.util.Scanner;
 
@@ -11,25 +13,29 @@ public class BoardControl {
 
     public void mainMenu() {
         while (true) {
-            System.out.println("메인 메뉴: 1.Create | 2.Read | 3.Clear | 4.Exit");
-            System.out.print("메뉴 선택: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            System.out.println();
-            switch (choice) {
-                case 1:
-                    createBoard();
-                    break;
-                case 2:
-                    readBoard();
-                    break;
-                case 3:
-                    clearBoards();
-                    break;
-                case 4:
-                    System.exit(0);
-                default:
-                    System.out.println("잘못된 선택입니다 다시 선택해주세요");
+            try {
+                System.out.println("메인 메뉴: 1.Create | 2.Read | 3.Clear | 4.Exit");
+                System.out.print("메뉴 선택: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                System.out.println();
+                switch (choice) {
+                    case 1:
+                        createBoard();
+                        break;
+                    case 2:
+                        readBoard();
+                        break;
+                    case 3:
+                        clearBoards();
+                        break;
+                    case 4:
+                        System.exit(0);
+                    default:
+                        throw new CustomException(ErrorException.INVALID_MENU);
+                }
+            } catch (CustomException e) {
+                System.out.println(e.getErrorException().getMsg());
             }
         }
     }
@@ -38,12 +44,13 @@ public class BoardControl {
         System.out.println("[새 게시물 입력]");
         String title;
         while (true) {
-            System.out.print("제목: ");
-            title = scanner.nextLine();
-            if (title.matches("[가-힣a-zA-Z0-9]{1,10}")) {
+            try {
+                System.out.print("제목: ");
+                title = scanner.nextLine();
+                boardService.validateTitle(title);
                 break;
-            } else {
-                System.out.println("한영 숫자로 이루어진 10글자 이내로 작성하세요.");
+            } catch (CustomException e) {
+                System.out.println(e.getErrorException().getMsg());
             }
         }
         System.out.print("내용: ");
@@ -51,12 +58,13 @@ public class BoardControl {
 
         String writer;
         while (true) {
-            System.out.print("작성자: ");
-            writer = scanner.nextLine();
-            if (writer.matches("[가-힣a-zA-Z]{1,5}")) {
+            try {
+                System.out.print("작성자: ");
+                writer = scanner.nextLine();
+                boardService.validateWriter(writer);
                 break;
-            } else {
-                System.out.println("한영으로 이루어진 5글자 이내로 작성하세요.");
+            } catch (CustomException e) {
+                System.out.println(e.getErrorException().getMsg());
             }
         }
         System.out.println("\n보조 메뉴: 1.OK | 2.Cancel");

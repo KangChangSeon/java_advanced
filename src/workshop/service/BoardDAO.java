@@ -1,13 +1,12 @@
-package workshop;
+package workshop.service;
 
-import workshop.Board;
+import workshop.dto.Board;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDAO {
 
     private static BoardDAO instance = new BoardDAO();
-    private BoardDAO boardDAO = new BoardDAO();
     private BoardDAO(){};
     public static BoardDAO getInstance(){
         return instance;

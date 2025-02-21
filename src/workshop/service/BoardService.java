@@ -1,7 +1,8 @@
-package workshop;
+package workshop.service;
 
-import workshop.BoardDAO;
-import workshop.Board;
+import workshop.dto.Board;
+import workshop.service.exception.CustomException;
+import workshop.service.exception.ErrorException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,6 +12,9 @@ public class BoardService {
     private BoardDAO boardDAO = BoardDAO.getInstance();
 
     public void createBoard(String title, String content, String writer) {
+        validateTitle(title);
+        validateWriter(writer);
+
         Date date = new Date();
         Board board = new Board(0, title, content, writer, date);
         boardDAO.insert(board);
@@ -25,6 +29,9 @@ public class BoardService {
     }
 
     public boolean updateBoard(int bno, String newTitle, String newContent, String newWriter) {
+        validateWriter(newWriter);
+        validateTitle(newTitle);
+
         Board board = boardDAO.findByBno(bno);
         if (board != null) {
             board.setBtitle(newTitle);
@@ -64,5 +71,18 @@ public class BoardService {
             }
             System.out.println("-----------------------------------------------------------\n");
         }
+    }
+
+    public Boolean validateTitle(String title){
+        if (!title.matches("[가-힣a-zA-Z0-9]{1,10}")) {
+            throw new CustomException(ErrorException.INVALID_TITLE);
+        }
+        return true;
+    }
+    public Boolean validateWriter(String title){
+        if (!title.matches("[가-힣a-zA-Z]{1,5}")) {
+            throw new CustomException(ErrorException.INVALID_WRITER);
+        }
+        return true;
     }
 }
