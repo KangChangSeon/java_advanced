@@ -24,6 +24,9 @@ public enum ErrorException {
 
     @Override
     public String toString() {
-        return "Error Code: " + code + " | Message: " + msg;
+        return "ErrorException{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                '}';
     }
 }
