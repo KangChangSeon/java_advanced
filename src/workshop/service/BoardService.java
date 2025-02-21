@@ -8,15 +8,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class BoardService {
-    private BoardDAO boardDAO = BoardDAO.getInstance();
+public class BoardService implements IBoardService{
+    private IBoardDAO boardDAO = new BoardDAO();
 
-    public void createBoard(String title, String content, String writer) {
-        validateTitle(title);
-        validateWriter(writer);
+    public void createBoard(Board board) {
+        validateTitle(board.getBtitle());
+        validateWriter(board.getBwriter());
 
-        Date date = new Date();
-        Board board = new Board(0, title, content, writer, date);
+        if(board.getBdate() == null){
+            board.setBdate(new Date());
+        }
         boardDAO.insert(board);
     }
 

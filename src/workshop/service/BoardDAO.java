@@ -1,16 +1,13 @@
 package workshop.service;
 
+import lombok.Data;
 import workshop.dto.Board;
 import java.util.ArrayList;
 import java.util.List;
+public class BoardDAO implements IBoardDAO{
 
-public class BoardDAO {
+    public BoardDAO(){};
 
-    private static BoardDAO instance = new BoardDAO();
-    private BoardDAO(){};
-    public static BoardDAO getInstance(){
-        return instance;
-    }
     private List<Board> boardList = new ArrayList<>();
     private int nextBno = 1;
 
