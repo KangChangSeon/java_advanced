@@ -22,7 +22,7 @@ public class UserSelectAll {
 
             // 3. 매개변수화된 SQL 문 작성
             String query = new StringBuilder()
-                    .append("SELECT * FROM users ")
+                    .append("SELECT * FROM users")
                     .toString();
             PreparedStatement pstmt = connection.prepareStatement(query);
 
