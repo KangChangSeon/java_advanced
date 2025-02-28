@@ -1,11 +1,11 @@
-package jdbc.advanced.boards.controller;
+package jdbc.advanced1.boards.controller;
 
 import java.util.List;
 import java.util.Scanner;
 
-import jdbc.advanced.boards.service.IJdbcBoardService;
-import jdbc.advanced.boards.service.JdbcBoardServiceImple;
-import jdbc.advanced.boards.vo.JdbcBoardVO;
+import jdbc.advanced1.boards.service.IJdbcBoardService;
+import jdbc.advanced1.boards.service.JdbcBoardServiceImple;
+import jdbc.advanced1.boards.vo.JdbcBoardVO;
 
 public class JdbcBoardController {
     private IJdbcBoardService service;

@@ -1,4 +1,4 @@
-package jdbc.advanced.boards.config;
+package jdbc.advanced2.boards.config;
 
 // JDBC 드라이버를 로딩하고 Connection객체를 생성하는 메서드로 구성된 class 만들기
 //( dbinfo.properties파일의 내용으로 설정하는 방법)

@@ -1,10 +1,10 @@
-package jdbc.advanced.boards.service;
+package jdbc.advanced1.boards.service;
 
 import java.util.List;
 
-import jdbc.advanced.boards.dao.IJdbcBoardDao;
-import jdbc.advanced.boards.dao.JdbcBoardDaoImpl;
-import jdbc.advanced.boards.vo.JdbcBoardVO;
+import jdbc.advanced1.boards.dao.IJdbcBoardDao;
+import jdbc.advanced1.boards.dao.JdbcBoardDaoImpl;
+import jdbc.advanced1.boards.vo.JdbcBoardVO;
 
 public class JdbcBoardServiceImple implements IJdbcBoardService {
     private IJdbcBoardDao dao;

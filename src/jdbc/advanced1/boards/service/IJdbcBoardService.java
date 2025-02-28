@@ -1,11 +1,10 @@
-package jdbc.advanced.boards.dao;
+package jdbc.advanced1.boards.service;
 
 import java.util.List;
 
-import jdbc.advanced.boards.vo.JdbcBoardVO;
+import jdbc.advanced1.boards.vo.JdbcBoardVO;
 
-public interface IJdbcBoardDao {
-
+public interface IJdbcBoardService {
     /**
      * JdbcBoardVO에 담겨진 자료를 DB에 insert하는 메서드
      *
@@ -60,5 +59,4 @@ public interface IJdbcBoardDao {
      * @return 작업성공 : 1, 작업실패 : 0
      */
     public int setCountIncrement(int boardNo);
-
 }

@@ -1,4 +1,4 @@
-package jdbc.advanced.boards.config;
+package jdbc.advanced2.boards.config;
 
 import java.io.File;
 import java.io.FileInputStream;

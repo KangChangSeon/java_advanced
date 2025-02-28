@@ -1,4 +1,4 @@
-package jdbc.advanced.boards.vo;
+package jdbc.advanced2.boards.vo;
 
 
 import lombok.Data;

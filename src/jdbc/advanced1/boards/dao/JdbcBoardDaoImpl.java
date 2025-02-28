@@ -1,4 +1,4 @@
-package jdbc.advanced.boards.dao;
+package jdbc.advanced1.boards.dao;
 
 
 import java.sql.Connection;
@@ -9,8 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import jdbc.advanced.boards.config.DBUtil;
-import jdbc.advanced.boards.vo.JdbcBoardVO;
+import jdbc.advanced1.boards.config.DBUtil;
+import jdbc.advanced1.boards.vo.JdbcBoardVO;
 
 public class JdbcBoardDaoImpl implements IJdbcBoardDao {
     private static JdbcBoardDaoImpl dao;
