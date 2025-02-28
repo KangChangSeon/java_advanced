@@ -41,7 +41,7 @@ public class User_Management_Service {
     public static void main(String[] args) {
         new User_Management_Service().memberStart();
     }
-
+    DBUtil db = DBUtil.getInstance();
 
     public void memberStart() {
         while (true) {
@@ -220,7 +220,7 @@ public class User_Management_Service {
         String newMemAddr = scan.nextLine();
 
         try {
-            conn = DBUtil.getConnection();
+            conn = db.getConnection();
             String sql = "UPDATE users SET " +
                     "username = ?, userpassword = ?, userphone = ?, useraddr = ? " +
                     "WHERE userid = ?";
