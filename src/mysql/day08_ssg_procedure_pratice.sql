@@ -219,3 +219,83 @@ END $$
 DELIMITER ;
 
 CALL delivProc('BBK');
+
+use ssgdb;
+-- 스토어드 함수를 사용하기 위해 생성권한을 허용해야 함
+SET GLOBAL log_bin_trust_function_creators = 1;
+
+
+DROP FUNCTION IF EXISTS userFunc;
+
+DELIMITER $$
+CREATE FUNCTION userFunc(value1 INT, value2 INT)
+    RETURNS INT
+BEGIN
+    RETURN value1 + value2;
+END $$
+DELIMITER ;
+
+SELECT userFunc(100, 200);
+
+DROP FUNCTION IF EXISTS getAgeFunc;
+DELIMITER $$
+CREATE FUNCTION getAgeFunc(bYear INT)
+    RETURNS INT
+BEGIN
+    DECLARE age INT;
+    SET age = YEAR(CURDATE()) - bYear;
+    RETURN age;
+END $$
+DELIMITER ;
+
+-- 함수의 반환값을 SELECT - INTO - 로 저장했다가 사용 가능
+SELECT getAgeFunc(1979) INTO @age1979;
+SELECT getAgeFunc(1997) INTO @age1997;
+SELECT CONCAT('1997년과 1979년의 나이차 --> ',(@age1979 - @age1997));
+
+-- 현재 저장된 스토어드 함수의 이름 및 내용 확인
+SHOW CREATE FUNCTION getAgeFunc;
+-- 스토어드 함수 삭제
+DROP FUNCTION getAgeFunc;
+
+
+-- 커서
+-- 05. 심화 (32p)
+-- 커서를 이용해 고객의 평균 키 구하는 스토어드 프로시저
+DROP PROCEDURE IF EXISTS cursorProc;
+DELIMITER $$
+CREATE PROCEDURE cursorProc()
+BEGIN
+    DECLARE userHeight INT; -- 고객의 키
+    DECLARE cnt INT DEFAULT 0; -- 고객의 인원 수(=읽은 행의 수)
+    DECLARE totalHeight INT DEFAULT 0; -- 키의 합계
+
+    DECLARE endofRow BOOLEAN DEFAULT FALSE; -- 행의 끝 여부 (기본 FALSE)
+
+    DECLARE userCursor CURSOR FOR -- 커서 선언
+        SELECT height FROM usertbl;
+
+    DECLARE CONTINUE HANDLER -- 행의 끝이면 endofRow 변수에 TRUE 대입
+        FOR NOT FOUND SET endofRow = TRUE;
+
+    OPEN userCursor;
+
+    cursor_loop: LOOP
+        FETCH userCursor INTO userHeight; -- 고객 키 1개를 대입
+
+        IF endofRow THEN
+            LEAVE cursor_loop; -- 더이상 읽을 행이 없으면 LOOP 종료
+        END IF;
+
+        SET cnt = cnt + 1;
+        SET totalHeight = totalHeight + userHeight;
+    END LOOP cursor_loop;
+
+    -- 고객 키의 평균을 출력
+    SELECT CONCAT('고객 키의 평균 --> ',(totalHeight/cnt));
+
+    CLOSE userCursor; -- 커서 닫기
+END $$
+DELIMITER ;
+
+CALL cursorProc();
