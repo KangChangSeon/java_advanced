@@ -88,3 +88,28 @@ END $$
 DELIMITER ;
 
 select * from TB_MEMBER;
+
+use ssgdb;
+DROP TABLE tb_product;
+CREATE TABLE tb_product(
+    prodCode CHAR(3) NOT NULL ,
+    prodId CHAR(4) NOT NULL ,
+    prodDate DATETIME NOT NULL ,
+    prodStatus CHAR(10) NULL
+);
+
+INSERT INTO tb_product VALUES ('AAA','0001',DATE_FORMAT('2023.10.10','%Y.%m.%d'),'판매완료');
+INSERT INTO tb_product VALUES ('AAA','0002',DATE_FORMAT('2023.10.11','%Y.%m.%d'),'매장진열');
+INSERT INTO tb_product VALUES ('BBB','0001',DATE_FORMAT('2023.10.12','%Y.%m.%d'),'재고창고');
+INSERT INTO tb_product VALUES ('CCC','0001',DATE_FORMAT('2023.10.13','%Y.%m.%d'),'판매완료');
+INSERT INTO tb_product VALUES ('CCC','0002',DATE_FORMAT('2023.10.14','%Y.%m.%d'),'매장진열');
+
+ALTER TABLE tb_product
+    ADD CONSTRAINT PK_product_proCode_proId
+    PRIMARY KEY (prodCode,prodId);
+
+SELECT * FROM tb_product;
+
+-- 테이블의 인덱스 정보 확인
+SHOW INDEX FROM tb_product;
+
