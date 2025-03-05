@@ -9,7 +9,7 @@ public class DBUtil {
     private static Connection conn = null;
 
     // 외부에서 인스턴스 생성을 막기 위해서 private 생성자
-    private DBUtil(){};
+    private DBUtil(){}
 
     public static Connection getConnection(){
         if(conn != null){
